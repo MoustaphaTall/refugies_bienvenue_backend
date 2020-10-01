@@ -1,9 +1,12 @@
 const express = require('express');
+const cors = require('cors'); //Enable cross-origin ressource sharing
 const mongoose = require('mongoose');
+const helmet = require('helmet'); //Protect from HTTP vulnerabilities
 const expressSession = require('express-session');
 const MongoStore = require('connect-mongo')(expressSession);
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const HTTPBearerStrategy = require('passport-http-bearer'); //To authenticate using a token
 
 require('dotenv').config();
 
@@ -14,7 +17,7 @@ const { authController } = require('./controllers');
 const { User } = require('./models');
 
 const { PORT, MONGODB_URI } = process.env;
-const port = PORT || 3000;
+const port = PORT || 3002;
 
 mongoose.connect(
 	MONGODB_URI,
@@ -33,31 +36,33 @@ mongoose.connect(
 );
 
 const app = express();
+//Enable cross-origin ressource sharing
+app.use(cors());
+//Protect from HTTP vulnerabilities
+app.use(helmet());
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-//Enable session management
-app.use(
-	expressSession({
-		secret: 'finalrefubienv56',
-		resave: false,
-		saveUninitialized: false,
-		store: new MongoStore({ mongooseConnection: mongoose.connection }),
-	})
-);
-
 //Enable passport
 app.use(passport.initialize());
-app.use(passport.session());
 
 //Configure passport
-passport.use(new LocalStrategy(User.authenticate())); //get user who wants to authenticate
+//Get user who wants to authenticate()
+passport.use(
+	new LocalStrategy(
+		{ usernameField: 'email', passReqToCallback: true, session: false },
+		User.authenticateLocal() //we declared this method in the User model
+	)
+);
 passport.serializeUser(User.serializeUser()); //save user_.id to the session, encrypting password
 passport.deserializeUser(User.deserializeUser()); //receive user._id from the session and fetch him from DB
 
-//Set up routes
-// // here app.use('/route', controllerName);
-app.use('/', authController);
+//Use bearer to authenticate via a token
+passport.use(new HTTPBearerStrategy(User.authenticateBearer())); //we declared this method in the User model
+
+// Set up routes
+app.use('/api', authController);
 
 //Testing if page displays correctly, delete afterwise
 app.get('/', (req, res) => {
