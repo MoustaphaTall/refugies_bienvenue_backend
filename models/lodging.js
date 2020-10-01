@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const lodgingSchema = new Schema({
-	volunteer_id: Schema.Types.ObjectId,
-	address_id: Schema.Types.ObjectId,
+	volunteer_id: { type: Schema.Types.ObjectId, ref: 'volunteer' },
+	address_id: { type: Schema.Types.ObjectId, ref: 'address' },
 	firstName: String,
 	lastName: String,
 	age: Number,

@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const followUpMeetingSchema = new Schema({
-	beneficiary_id: Schema.Types.ObjectId,
-	lodging_id: Schema.Types.ObjectId,
-	volunteer_id: Schema.Types.ObjectId,
-	contact_id: Schema.Types.ObjectId,
+	beneficiary_id: { type: Schema.Types.ObjectId, ref: 'beneficiary' },
+	lodging_id: { type: Schema.Types.ObjectId, ref: 'lodging' },
+	volunteer_id: { type: Schema.Types.ObjectId, ref: 'volunteer' },
+	contact_id: { type: Schema.Types.ObjectId, ref: 'contact' },
 	interlocutor: String,
 	platform: String,
 	date: Date,
