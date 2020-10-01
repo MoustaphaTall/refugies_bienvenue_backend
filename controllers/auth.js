@@ -4,7 +4,7 @@ const uid2 = require('uid2'); //to generate random keys
 
 const router = express.Router();
 
-const { User } = require('../models');
+const { Volunteer } = require('../models');
 
 router.post('/inscription', (req, res) => {
 	console.log('POST /signup');
@@ -14,9 +14,9 @@ router.post('/inscription', (req, res) => {
 	const { email, firstName, lastName, password } = req.body;
 
 	//User.register(user, password, callback)
-	User.register(
-		new User({
-			email,
+	Volunteer.register(
+		new Volunteer({
+			email: req.body.email,
 			firstName,
 			lastName,
 			token: uid2(16),
@@ -28,13 +28,16 @@ router.post('/inscription', (req, res) => {
 			console.log(user);
 			if (err) {
 				console.log('/signup register err', err);
-				res.status(400).json({ error: err.message });
+				res.status(400).json({ success: false, message: err.message });
 			} else {
 				res.json({
-					_id: user._id.toString(),
-					token: user.token,
-					firstName: user.firstName,
-					lastName: user.lastName,
+					success: true,
+					data: {
+						_id: user._id.toString(),
+						token: user.token,
+						firstName: user.firstName,
+						lastName: user.lastName,
+					},
 				});
 			}
 		}
@@ -50,22 +53,27 @@ router.post('/connection', (req, res, next) => {
 			return next(err.message);
 		}
 		if (!user) {
-			return res.status(401).json({ error: 'Unauthorized' });
+			return res.status(401).json({
+				success: false,
+				message: 'Unauthorized',
+			});
 		}
 		console.log('user', user);
 		res.json({
-			_id: user._id.toString(),
-			token,
-			email,
-			firstName,
-			lastName,
+			success: true,
+			data: {
+				_id: user._id.toString(),
+				token,
+				email,
+				firstName,
+				lastName,
+			},
 		});
 	})(req, res, next);
 });
 
 //routes to test login and signup, delete afterwards
 router.get('/connection', (req, res) => {
-	console.log(req.isAuthenticated());
 	res.send(
 		'<form action="/api/connection" method="POST"><input type="text" name="firstName" placeholder="name"><input type="text" name="lastName" placeholder="lastname"><input type="text" name="email" placeholder="mail"><input type="password" name="password" placeholder="password"><button> Add Friend </button></form>'
 	);
@@ -75,6 +83,35 @@ router.get('/inscription', (req, res) => {
 	res.send(
 		'<form action="/api/inscription" method="POST"><input type="text" name="firstName" placeholder="name"><input type="text" name="lastName" placeholder="lastname"><input type="text" name="email" placeholder="mail"><input type="password" name="password" placeholder="password"><button> Add Friend </button></form>'
 	);
+});
+
+router.get('/bénévole/:id', (req, res, next) => {
+	passport.authenticate('bearer', { session: false }, (err, user, info) => {
+		if (err) {
+			res.status(400);
+			return next(err.message);
+		}
+		if (!user) {
+			return res.status(401).json({
+				success: false,
+				message: 'Unauthorized',
+			});
+		}
+
+		Volunteer.findById(req.params.id)
+			.then((user) => {
+				if (!user) {
+					res.status(404);
+					return next('User not found');
+				}
+
+				return res.json({ success: true, data: user });
+			})
+			.catch((err) => {
+				res.status(400);
+				return next(err.message);
+			});
+	})(req, res, next);
 });
 
 module.exports = router;

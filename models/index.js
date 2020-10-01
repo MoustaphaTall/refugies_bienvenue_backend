@@ -1,5 +1,4 @@
 module.exports = {
-	User: require('./user'),
 	Beneficiary: require('./beneficiary'),
 	Volunteer: require('./volunteer'),
 	Activity: require('./volunteer'),

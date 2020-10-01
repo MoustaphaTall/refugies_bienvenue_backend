@@ -14,7 +14,7 @@ require('dotenv').config();
 const { authController } = require('./controllers');
 
 //Set up models
-const { User } = require('./models');
+const { Volunteer } = require('./models');
 
 const { PORT, MONGODB_URI } = process.env;
 const port = PORT || 3002;
@@ -52,14 +52,14 @@ app.use(passport.initialize());
 passport.use(
 	new LocalStrategy(
 		{ usernameField: 'email', passReqToCallback: true, session: false },
-		User.authenticateLocal() //we declared this method in the User model
+		Volunteer.authenticateLocal() //we declared this method in the volunteer model
 	)
 );
-passport.serializeUser(User.serializeUser()); //save user_.id to the session, encrypting password
-passport.deserializeUser(User.deserializeUser()); //receive user._id from the session and fetch him from DB
+passport.serializeUser(Volunteer.serializeUser()); //save user_.id to the session, encrypting password
+passport.deserializeUser(Volunteer.deserializeUser()); //receive user._id from the session and fetch him from DB
 
 //Use bearer to authenticate via a token
-passport.use(new HTTPBearerStrategy(User.authenticateBearer())); //we declared this method in the User model
+passport.use(new HTTPBearerStrategy(Volunteer.authenticateBearer())); //we declared this method in the User model
 
 // Set up routes
 app.use('/api', authController);
