@@ -1,0 +1,10 @@
+Models :
+  # beneficiary model :
+    - J'ai supprimé "njMaster" parce que je ne sais pas ce que c'est
+    - job.incomeValue : sur le diagramme de classe, j'ai modifié la valeur "bool" en "Number"
+
+  # activities model :
+    - J'ai renommé en "activity" dans le diagramme
+
+  # beneficiaryLodging model :
+    - J'ai renommé beneficiary_lodging en camel case pour harmoniser
