@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors'); //Enable cross-origin ressource sharing
 const mongoose = require('mongoose');
@@ -7,11 +9,14 @@ const MongoStore = require('connect-mongo')(expressSession);
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const HTTPBearerStrategy = require('passport-http-bearer'); //To authenticate using a token
-
-require('dotenv').config();
+const bodyParser = require('body-parser');
 
 //Set up controllers
-const { authController, beneficiaryController } = require('./controllers');
+const {
+	authController,
+	beneficiaryController,
+	lodgingController,
+} = require('./controllers');
 
 //Set up models
 const { Volunteer } = require('./models');
@@ -41,6 +46,11 @@ app.use(cors());
 //Protect from HTTP vulnerabilities
 app.use(helmet());
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+app.use(bodyParser.json());
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -64,6 +74,7 @@ passport.use(new HTTPBearerStrategy(Volunteer.authenticateBearer())); //we decla
 // Set up routes
 app.use('/api', authController);
 app.use('/beneficiaires', beneficiaryController);
+app.use('/api/hebergement', lodgingController);
 
 //Testing if page displays correctly, delete afterwise
 app.get('/', (req, res) => {
