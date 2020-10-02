@@ -13,7 +13,7 @@ const volunteerSchema = new Schema({
 });
 
 volunteerSchema.plugin(passportLocalMongoose, {
-	usernameField: 'email',
+	usernameField: 'mail',
 	session: false, //no sessions in Rest API
 });
 
