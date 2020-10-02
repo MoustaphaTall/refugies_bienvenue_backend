@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const contactSchema = new Schema({
-	address_id: { type: Schema.Types.ObjectId, ref: 'Address' },
+	address: { type: Schema.Types.ObjectId, ref: 'Address' },
 	name: String,
 	function: String,
 	phone: Number,

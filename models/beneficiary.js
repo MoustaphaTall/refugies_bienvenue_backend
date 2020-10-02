@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const beneficiarySchema = new Schema({
-	volunteer_id: { type: Schema.Types.ObjectId, ref: 'Volunteer' },
+	volunteer: { type: Schema.Types.ObjectId, ref: 'Volunteer' },
 	firstName: String,
 	lastName: String,
 	birthDate: Date,
@@ -16,7 +16,7 @@ const beneficiarySchema = new Schema({
 	agdrefNumber: Number,
 
 	administrative: {
-		address_id: { type: Schema.Types.ObjectId, ref: 'Address' },
+		address: { type: Schema.Types.ObjectId, ref: 'Address' },
 		cirOrDa: String,
 		cirDaStatus: String,
 		isBankAccount: Boolean,

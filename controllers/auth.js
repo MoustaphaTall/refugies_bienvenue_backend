@@ -72,20 +72,8 @@ router.post('/connection', (req, res, next) => {
 	})(req, res, next);
 });
 
-//routes to test login and signup, delete afterwards
-router.get('/connection', (req, res) => {
-	res.send(
-		'<form action="/api/connection" method="POST"><input type="text" name="firstName" placeholder="name"><input type="text" name="lastName" placeholder="lastname"><input type="text" name="email" placeholder="mail"><input type="password" name="password" placeholder="password"><button> Add Friend </button></form>'
-	);
-});
-
-router.get('/inscription', (req, res) => {
-	res.send(
-		'<form action="/api/inscription" method="POST"><input type="text" name="firstName" placeholder="name"><input type="text" name="lastName" placeholder="lastname"><input type="text" name="email" placeholder="mail"><input type="password" name="password" placeholder="password"><button> Add Friend </button></form>'
-	);
-});
-
-router.get('/bénévole/:id', (req, res, next) => {
+//To use in case we need to use a bearer token to fetch all information of the user
+router.get('/benevole/:id', (req, res, next) => {
 	passport.authenticate('bearer', { session: false }, (err, user, info) => {
 		if (err) {
 			res.status(400);
@@ -112,6 +100,19 @@ router.get('/bénévole/:id', (req, res, next) => {
 				return next(err.message);
 			});
 	})(req, res, next);
+});
+
+//routes to test login and signup, delete afterwards
+router.get('/connection', (req, res) => {
+	res.send(
+		'<form action="/api/connection" method="POST"><input type="text" name="firstName" placeholder="name"><input type="text" name="lastName" placeholder="lastname"><input type="text" name="email" placeholder="mail"><input type="password" name="password" placeholder="password"><button> Add Friend </button></form>'
+	);
+});
+
+router.get('/inscription', (req, res) => {
+	res.send(
+		'<form action="/api/inscription" method="POST"><input type="text" name="firstName" placeholder="name"><input type="text" name="lastName" placeholder="lastname"><input type="text" name="email" placeholder="mail"><input type="password" name="password" placeholder="password"><button> Add Friend </button></form>'
+	);
 });
 
 module.exports = router;
