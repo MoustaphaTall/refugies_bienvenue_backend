@@ -11,7 +11,7 @@ const HTTPBearerStrategy = require('passport-http-bearer'); //To authenticate us
 require('dotenv').config();
 
 //Set up controllers
-const { authController } = require('./controllers');
+const { authController, beneficiaryController } = require('./controllers');
 
 //Set up models
 const { Volunteer } = require('./models');
@@ -63,6 +63,7 @@ passport.use(new HTTPBearerStrategy(Volunteer.authenticateBearer())); //we decla
 
 // Set up routes
 app.use('/api', authController);
+app.use('/beneficiaires', beneficiaryController);
 
 //Testing if page displays correctly, delete afterwise
 app.get('/', (req, res) => {

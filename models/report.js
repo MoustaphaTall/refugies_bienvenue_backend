@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const reportSchema = new Schema({
-	beneficiary_id: { type: Schema.Types.ObjectId, ref: 'beneficiary' },
+	beneficiary: { type: Schema.Types.ObjectId, ref: 'Beneficiary' },
 
 	frenchLevel: {
 		arrivalAssociation: String,
