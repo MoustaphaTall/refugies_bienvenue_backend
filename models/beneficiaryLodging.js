@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const beneficiaryLodgingSchema = new Schema({
-	beneficiary_id: { type: Schema.Types.ObjectId, ref: 'beneficiary' },
-	lodging_id: { type: Schema.Types.ObjectId, ref: 'lodging' },
+	beneficiary_id: { type: Schema.Types.ObjectId, ref: 'Beneficiary' },
+	lodging_id: { type: Schema.Types.ObjectId, ref: 'Lodging' },
 	dateEntry: Date,
 	dateExit: Date,
 	exitMotif: String,
