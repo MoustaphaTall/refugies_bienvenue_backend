@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const contactSchema = new Schema({
 	address: { type: Schema.Types.ObjectId, ref: 'Address' },
 	name: String,
-	function: String,
+	role: String,
 	phone: Number,
 	mail: String,
 });

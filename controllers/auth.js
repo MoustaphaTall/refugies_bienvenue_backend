@@ -6,7 +6,7 @@ const router = express.Router();
 
 const { Volunteer } = require('../models');
 
-router.post('/inscription', (req, res) => {
+router.post('/signup', (req, res) => {
 	console.log('POST /signup');
 	console.log('/signup req.file', req.file);
 	console.log('/signup req.body', req.body);

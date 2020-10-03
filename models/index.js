@@ -4,7 +4,7 @@ module.exports = {
 	Activity: require('./volunteer'),
 	Address: require('./address'),
 	Contact: require('./contact'),
-	FollowupMeeting: require('./followUpMeeting'),
+	FollowUpMeeting: require('./followUpMeeting'),
 	Lodging: require('./lodging'),
 	Report: require('./report'),
 	BeneficiaryLodging: require('./beneficiaryLodging'),
