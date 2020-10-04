@@ -5,4 +5,5 @@ module.exports = {
 	followUpMeetingController: require('./followUpMeeting'),
 	contactController: require('./contact'),
 	volunteerController: require('./volunteer'),
+	reportsController: require('./reports'),
 };

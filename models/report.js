@@ -3,13 +3,14 @@ const Schema = mongoose.Schema;
 
 const reportSchema = new Schema({
 	beneficiary: { type: Schema.Types.ObjectId, ref: 'Beneficiary' },
+	date: Date,
 	arrivalFrenchLevel: String,
 	exitFrenchLevel: String,
 	perceivedAmeliorationFrenchLevel: Boolean,
 	commentsFrenchLevel: String,
 	confidenceGain: String,
 	isAssociationUseful: Boolean,
-	commentsAssociation: String,
+	commentsOnAssociation: String,
 	personalFeedback: String,
 	associationFeedback: String,
 	journeyFeedback: String,
