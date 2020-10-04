@@ -17,6 +17,7 @@ const {
 	lodgingController,
 	followUpMeetingController,
 	contactController,
+	volunteerController,
 } = require('./controllers');
 
 //Set up models
@@ -72,6 +73,7 @@ app.use('/api/beneficiaries', beneficiaryController);
 app.use('/api/lodging', lodgingController);
 app.use('/api/beneficiaries/:id/followUpMeeting', followUpMeetingController);
 app.use('/api/contacts', contactController);
+app.use('api/volunteer/', volunteerController);
 
 //Testing if page displays correctly, delete afterwise
 app.get('/', (req, res) => {

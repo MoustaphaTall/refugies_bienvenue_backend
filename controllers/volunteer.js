@@ -4,17 +4,29 @@ const router = express.Router();
 const { Volunteer } = require('../models');
 
 router.post('/', (req, res) => {
-	const { firstName, lastName, Password, role, mail } = req.body;
-
-	const contact = new Contact({
+	const {
 		firstName,
 		lastName,
 		Password,
-		role,
 		mail,
+		phone,
+		isAdmin,
+		isActive,
+		callBackDate,
+	} = req.body;
+
+	const volunteer = new Volunteer({
+		firstName,
+		lastName,
+		Password,
+		mail,
+		phone,
+		isAdmin,
+		isActive,
+		callBackDate,
 	});
 
-	volunteer.save((err, volunteerDb) => {
+	Volunteer.save((err, volunteerDb) => {
 		if (err !== null) {
 			res.json({
 				success: false,
@@ -30,6 +42,17 @@ router.post('/', (req, res) => {
 });
 
 router.get('/', (req, res) => {
+	const {
+		firstName,
+		lastName,
+		Password,
+		mail,
+		phone,
+		isAdmin,
+		isActive,
+		callBackDate,
+	} = req.body;
+
 	Volunteer.find({}, (err, volunteers) => {
 		if (err !== null) {
 			res.json({
