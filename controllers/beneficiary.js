@@ -41,7 +41,7 @@ const createBeneficiary = (req, res) => {
 	} = allBody;
 
 	// Find the volunteer tied to the beneficiary
-	Volunteer.find({ mail: req.body.volunteerMail }, (err, volunteer) => {
+	Volunteer.find({ mail: volunteerMail }, (err, volunteer) => {
 		if (err !== null) {
 			res.json({
 				success: false,

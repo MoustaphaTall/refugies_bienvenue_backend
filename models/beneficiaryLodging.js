@@ -7,12 +7,8 @@ const beneficiaryLodgingSchema = new Schema({
 	dateEntry: Date,
 	dateExit: Date,
 	exitMotif: String,
-
-	cohabitationContract: {
-		isSigned: Boolean,
-		isToRenew: Boolean,
-	},
-
+	isContractSigned: Boolean,
+	isContractToRenew: Boolean,
 	comments: String,
 });
 

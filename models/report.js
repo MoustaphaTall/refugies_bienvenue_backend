@@ -3,28 +3,17 @@ const Schema = mongoose.Schema;
 
 const reportSchema = new Schema({
 	beneficiary: { type: Schema.Types.ObjectId, ref: 'Beneficiary' },
-
-	frenchLevel: {
-		arrivalAssociation: String,
-		exitAssociation: String,
-		perceivedAmelioration: Boolean,
-		comments: String,
-	},
-
+	arrivalFrenchLevel: String,
+	exitFrenchLevel: String,
+	perceivedAmeliorationFrenchLevel: Boolean,
+	commentsFrenchLevel: String,
 	confidenceGain: String,
-
-	association: {
-		isUseful: Boolean,
-		comments: String,
-	},
-
-	feedback: {
-		personal: String,
-		association: String,
-		journey: String,
-		peopleMet: String,
-	},
-
+	isAssociationUseful: Boolean,
+	commentsAssociation: String,
+	personalFeedback: String,
+	associationFeedback: String,
+	journeyFeedback: String,
+	peopleMetFeedback: String,
 	takenSteps: String,
 	goals: String,
 	created: Date,

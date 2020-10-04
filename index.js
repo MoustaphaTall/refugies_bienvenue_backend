@@ -68,10 +68,10 @@ passport.use(new HTTPBearerStrategy(Volunteer.authenticateBearer())); //we decla
 
 // Set up routes
 app.use('/api', authController);
-app.use('/api/beneficiary', beneficiaryController);
+app.use('/api/beneficiaries', beneficiaryController);
 app.use('/api/lodging', lodgingController);
-app.use('/api/beneficiary/:id/followUpMeeting', followUpMeetingController);
-app.use('/api/contact', contactController);
+app.use('/api/beneficiaries/:id/followUpMeeting', followUpMeetingController);
+app.use('/api/contacts', contactController);
 
 //Testing if page displays correctly, delete afterwise
 app.get('/', (req, res) => {

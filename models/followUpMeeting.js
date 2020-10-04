@@ -12,12 +12,8 @@ const followUpMeetingSchema = new Schema({
 	attachments: String,
 	isCompleted: String,
 	summary: String,
-
-	actionItems: {
-		beneficiary: String,
-		association: String,
-	},
-
+	actionItemsBeneficiary: String,
+	actionItemsAssociation: String,
 	jobSearchStatus: String,
 	trainingStatus: String,
 });
