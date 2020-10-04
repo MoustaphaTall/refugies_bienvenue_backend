@@ -17,11 +17,8 @@ const {
 	lodgingController,
 	followUpMeetingController,
 	contactController,
-<<<<<<< HEAD
 	volunteerController,
-=======
 	reportsController,
->>>>>>> 1cf2f8a12257e53f9e436ec27f36182f4b40157c
 } = require('./controllers');
 
 //Set up models
