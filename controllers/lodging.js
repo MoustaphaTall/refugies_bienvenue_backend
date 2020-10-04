@@ -36,7 +36,6 @@ router.post('/', (req, res) => {
 
 	lodging.save((err, lodgingDb) => {
 		if (err !== null) {
-			// console.log('err', err);
 			res.json({
 				success: false,
 				message: err.toString(),
@@ -47,26 +46,22 @@ router.post('/', (req, res) => {
 			success: true,
 			data: lodginDb,
 		});
-		// console.log('lodging', lodgingDb);
 	});
 });
 
 router.get('/', (req, res) => {
 	Lodging.find({}, (err, lodgings) => {
 		if (err !== null) {
-			// console.log('err', err);
 			res.json({
 				success: false,
 				message: err.toString(),
 			});
 			return;
 		}
-		// console.log(lodgings);
 		res.json({
 			success: true,
 			data: lodgings,
 		});
-		// console.log('lodgings', lodgings);
 	});
 });
 
@@ -74,17 +69,15 @@ router.get('/:id', (req, res) => {
 	const id = req.params.id;
 	Lodging.findById(id, (err, lodging) => {
 		if (err !== null) {
-			// console.log('err', err);
 			res.json({
 				success: false,
 				message: err.toString(),
 			});
 			return;
 		}
-		// console.log(lodging);
 		res.json({
 			success: true,
-			data: lodging.id,
+			data: lodging._id,
 		});
 	});
 });

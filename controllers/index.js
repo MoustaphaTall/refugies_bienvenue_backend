@@ -4,4 +4,5 @@ module.exports = {
 	lodgingController: require('./lodging'),
 	followUpMeetingController: require('./followUpMeeting'),
 	contactController: require('./contact'),
+	volunteerController: require('./volunteer'),
 };

@@ -1,20 +1,20 @@
 const express = require('express');
 const router = express.Router();
 
-const { Contact } = require('../models');
+const { Volunteer } = require('../models');
 
 router.post('/', (req, res) => {
-	const { address, name, role, phone, mail } = req.body;
+	const { firstName, lastName, Password, role, mail } = req.body;
 
 	const contact = new Contact({
-		address,
-		name,
+		firstName,
+		lastName,
+		Password,
 		role,
-		phone,
 		mail,
 	});
 
-	contact.save((err, contactDb) => {
+	volunteer.save((err, volunteerDb) => {
 		if (err !== null) {
 			res.json({
 				success: false,
@@ -24,13 +24,13 @@ router.post('/', (req, res) => {
 		}
 		res.json({
 			success: true,
-			data: contactDb,
+			data: volunteerDb,
 		});
 	});
 });
 
 router.get('/', (req, res) => {
-	Contact.find({}, (err, contacts) => {
+	Volunteer.find({}, (err, volunteers) => {
 		if (err !== null) {
 			res.json({
 				success: false,
@@ -40,14 +40,14 @@ router.get('/', (req, res) => {
 		}
 		res.json({
 			success: true,
-			data: contacts,
+			data: volunteers,
 		});
 	});
 });
 
 router.get('/:id', (req, res) => {
 	const id = req.params.id;
-	Contact.findById(id, (err, contact) => {
+	Volunteer.findById(id, (err, volunteer) => {
 		if (err !== null) {
 			res.json({
 				success: false,
@@ -57,7 +57,7 @@ router.get('/:id', (req, res) => {
 		}
 		res.json({
 			success: true,
-			data: contact._id,
+			data: volunteer._id,
 		});
 	});
 });
