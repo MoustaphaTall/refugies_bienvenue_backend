@@ -17,7 +17,11 @@ const {
 	lodgingController,
 	followUpMeetingController,
 	contactController,
+<<<<<<< HEAD
 	volunteerController,
+=======
+	reportsController,
+>>>>>>> 1cf2f8a12257e53f9e436ec27f36182f4b40157c
 } = require('./controllers');
 
 //Set up models
@@ -72,6 +76,7 @@ app.use('/api', authController);
 app.use('/api/beneficiaries', beneficiaryController);
 app.use('/api/lodging', lodgingController);
 app.use('/api/beneficiaries/:id/followUpMeeting', followUpMeetingController);
+app.use('/api/beneficiaries/:id/reports', reportsController);
 app.use('/api/contacts', contactController);
 app.use('api/volunteer/', volunteerController);
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { Beneficiary, Volunteer, Address } = require('../models');
+const { Beneficiary, Volunteer, Address, Report } = require('../models');
 
 const saveBeneficiary = (addressId, volunteerId, otherData, res) => {
 	const beneficiary = new Beneficiary({
@@ -131,6 +131,32 @@ const deleteBeneficiary = (req, res) => {
 	});
 };
 
+const readReports = (req, res) => {
+	console.log('GET /beneficiaries/reports');
+
+	Report.find({}, (err, reports) => {
+		if (err !== null) {
+			res.json({
+				success: false,
+				message: err.toString(),
+			});
+			return;
+		}
+
+		const data = reports.map((report) => {
+			return {
+				_id: report._id,
+				date: report.date,
+			};
+		});
+
+		res.json({
+			success: true,
+			data,
+		});
+	});
+};
+
 const readBeneficiary = (req, res) => {
 	console.log('GET /beneficiaires/:id');
 	console.log(req.user);
@@ -226,20 +252,14 @@ const updateBeneficiary = (req, res) => {
 	);
 };
 
-router.post('/', createBeneficiary);
-router.get('/', readBeneficiaries);
+router.route('/').post(createBeneficiary).get(readBeneficiaries);
 
-router.get('/:id', readBeneficiary);
-router.delete('/:id', deleteBeneficiary);
-router.put('/:id', updateBeneficiary);
+router
+	.route('/:id')
+	.get(readBeneficiary)
+	.delete(deleteBeneficiary)
+	.put(updateBeneficiary);
 
-/* 
-Puis ajoutera 
-    router.route(/:id)
-        .get(readBeneficiary),
-        .put
-        .delete
-    etc        
-*/
+router.route('/reports').get(readReports);
 
 module.exports = router;
