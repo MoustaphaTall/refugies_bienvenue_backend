@@ -71,9 +71,9 @@ passport.use(new HTTPBearerStrategy(Volunteer.authenticateBearer())); //we decla
 // Set up routes
 app.use('/api', authController);
 app.use('/api/beneficiaries', beneficiaryController);
-app.use('/api/lodging', lodgingController);
-app.use('/api/beneficiaries/:id/followUpMeeting', followUpMeetingController);
 app.use('/api/beneficiaries/:id/reports', reportsController);
+app.use('/api/lodging', lodgingController);
+app.use('/api/meetings', followUpMeetingController);
 app.use('/api/contacts', contactController);
 app.use('api/volunteer/', volunteerController);
 

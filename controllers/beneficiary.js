@@ -159,7 +159,6 @@ const readReports = (req, res) => {
 
 const readBeneficiary = (req, res) => {
 	console.log('GET /beneficiaires/:id');
-	console.log(req.user);
 	const beneficiaryId = req.params.id;
 
 	Beneficiary.findById(beneficiaryId)

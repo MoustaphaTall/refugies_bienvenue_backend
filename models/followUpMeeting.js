@@ -10,7 +10,7 @@ const followUpMeetingSchema = new Schema({
 	platform: String,
 	date: Date,
 	attachments: String,
-	isCompleted: String,
+	isCompleted: Boolean,
 	summary: String,
 	actionItemsBeneficiary: String,
 	actionItemsAssociation: String,
