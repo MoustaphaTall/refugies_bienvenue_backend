@@ -23,8 +23,8 @@ volunteerSchema.plugin(passportLocalMongoose, {
 volunteerSchema.statics.authenticateLocal = function () {
 	//es5 function, to not bind this
 	var _self = this;
-	return function (req, email, password, cb) {
-		_self.findByUsername(email, true, function (err, user) {
+	return function (req, mail, password, cb) {
+		_self.findByUsername(mail, true, function (err, user) {
 			if (err) {
 				return cb(err);
 			}

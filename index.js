@@ -58,7 +58,7 @@ app.use(passport.initialize());
 //Get user who wants to authenticate()
 passport.use(
 	new LocalStrategy(
-		{ usernameField: 'email', passReqToCallback: true, session: false },
+		{ usernameField: 'mail', passReqToCallback: true, session: false },
 		Volunteer.authenticateLocal() //we declared this method in the volunteer model
 	)
 );
