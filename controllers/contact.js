@@ -1,16 +1,24 @@
 const express = require('express');
 const router = express.Router();
 
-const { Contact } = require('../models');
+const { Contact, Address } = require('../models');
 
 router.post('/', (req, res) => {
-	const { address, name, role, phone, mail } = req.body;
+	const {
+		address,
+		firstName,
+		lastName,
+		organisation,
+		position,
+		mail,
+	} = req.body;
 
 	const contact = new Contact({
 		address,
-		name,
-		role,
-		phone,
+		firstName,
+		lastName,
+		organisation,
+		position,
 		mail,
 	});
 

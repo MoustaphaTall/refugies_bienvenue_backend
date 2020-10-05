@@ -3,8 +3,10 @@ const Schema = mongoose.Schema;
 
 const contactSchema = new Schema({
 	address: { type: Schema.Types.ObjectId, ref: 'Address' },
-	name: String,
-	role: String,
+	firstName: String,
+	LastName: String,
+	organization: String,
+	position: String,
 	phone: Number,
 	mail: String,
 });
