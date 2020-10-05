@@ -75,15 +75,68 @@ const getLodgingId = (mail, res) => {
 const createMeeting = (req, res) => {
 	console.log('POST /meetings');
 	const {
-		volunteerMail,
-		beneficiaryMail,
-		contactMail,
-		lodgingMail,
+		volunteerId,
+		beneficiaryId,
+		contactId,
+		lodgingId,
 		...allButInterlocutor
 	} = req.body;
 
 	//Find the volunteer to which the meeting is attached
-	Volunteer.findOne({ mail: volunteerMail }, async (err, volunteer) => {
+	// Volunteer.findOne({ mail: volunteerMail }, async (err, volunteer) => {
+	// 	if (err !== null) {
+	// 		res.json({
+	// 			success: false,
+	// 			message: err.toString(),
+	// 		});
+	// 		return;
+	// 	}
+
+	// 	if (volunteer === null) {
+	// 		res.json({
+	// 			success: false,
+	// 			message: `No volunteer with mail ${volunteerMail} was found`,
+	// 		});
+	// 		return;
+	// 	}
+
+	// 	const volunteerId = volunteer._id;
+	// 	//We need to get the interlocutor's type (beneficiary etc) and interlocutor's id to populate afterwards
+	// 	let interlocutorMap = {
+	// 		interlocutor: null,
+	// 		interlocutorId: null,
+	// 	};
+	// 	let { interlocutor, interlocutorId } = interlocutorMap;
+
+	// 	//We use the interlocutor's mail, which is unique, to find them and get their id
+	// 	if (beneficiaryMail !== undefined) {
+	// 		interlocutorId = await getBeneficiaryId(beneficiaryMail, res);
+	// 		interlocutor = 'beneficiary';
+	// 	} else if (contactMail !== undefined) {
+	// 		interlocutorId = await getContactId(contactMail, res);
+	// 		interlocutor = 'contact';
+	// 	} else if (lodgingMail !== undefined) {
+	// 		interlocutorId = await getLodgingId(lodgingMail, res);
+	// 		interlocutor = 'lodging';
+	// 	} else {
+	// 		res.json({
+	// 			success: false,
+	// 			message: `Please choose an existing interlocutor`,
+	// 		});
+	// 	}
+
+	// console.log('interlocutorId', interlocutorId);
+
+	const meeting = new FollowUpMeeting({
+		volunteer: volunteerId,
+		beneficiary: beneficiaryId,
+		contact: contactId,
+		lodging: lodgingId,
+		// [interlocutor]: interlocutorId, //unneeded now that we can choose multiple interlocutors
+		...allButInterlocutor,
+	});
+
+	meeting.save((err, meeting) => {
 		if (err !== null) {
 			res.json({
 				success: false,
@@ -92,62 +145,12 @@ const createMeeting = (req, res) => {
 			return;
 		}
 
-		if (volunteer === null) {
-			res.json({
-				success: false,
-				message: `No volunteer with mail ${volunteerMail} was found`,
-			});
-			return;
-		}
-
-		const volunteerId = volunteer._id;
-		//We need to get the interlocutor's type (beneficiary etc) and interlocutor's id to populate afterwards
-		let interlocutorMap = {
-			interlocutor: null,
-			interlocutorId: null,
-		};
-		let { interlocutor, interlocutorId } = interlocutorMap;
-
-		//We use the interlocutor's mail, which is unique, to find them and get their id
-		if (beneficiaryMail !== undefined) {
-			interlocutorId = await getBeneficiaryId(beneficiaryMail, res);
-			interlocutor = 'beneficiary';
-		} else if (contactMail !== undefined) {
-			interlocutorId = await getContactId(contactMail, res);
-			interlocutor = 'contact';
-		} else if (lodgingMail !== undefined) {
-			interlocutorId = await getLodgingId(lodgingMail, res);
-			interlocutor = 'lodging';
-		} else {
-			res.json({
-				success: false,
-				message: `Please choose an existing interlocutor`,
-			});
-		}
-
-		// console.log('interlocutorId', interlocutorId);
-
-		const meeting = new FollowUpMeeting({
-			volunteer: volunteerId,
-			[interlocutor]: interlocutorId,
-			...allButInterlocutor,
-		});
-
-		meeting.save((err, meeting) => {
-			if (err !== null) {
-				res.json({
-					success: false,
-					message: err.toString(),
-				});
-				return;
-			}
-
-			res.json({
-				success: true,
-				data: meeting,
-			});
+		res.json({
+			success: true,
+			data: meeting,
 		});
 	});
+	// });
 };
 
 const deleteMeeting = (req, res) => {
@@ -189,6 +192,9 @@ const readMeeting = (req, res) => {
 
 	FollowUpMeeting.findById(meetingId)
 		.populate('volunteer')
+		.populate('beneficiary')
+		.populate('contact')
+		.populate('lodging')
 		.exec((err, meeting) => {
 			if (err !== null) {
 				res.json({

@@ -36,77 +36,78 @@ const createBeneficiary = (req, res) => {
 		streetName,
 		zipCode,
 		city,
-		volunteerMail,
+		volunteerId,
 		...allButAddressVolunteer
 	} = allBody;
 
-	// Find the volunteer tied to the beneficiary
-	Volunteer.findOne({ mail: volunteerMail }, (err, volunteer) => {
-		if (err !== null) {
-			res.json({
-				success: false,
-				message: err.toString(),
-			});
-			return;
-		}
+	// Find the volunteer tied to the beneficiary --- not needed anymore
+	//
+	// Volunteer.findOne({ mail: volunteerMail }, (err, volunteer) => {
+	// 	if (err !== null) {
+	// 		res.json({
+	// 			success: false,
+	// 			message: err.toString(),
+	// 		});
+	// 		return;
+	// 	}
 
-		// console.log(volunteer);
-		if (volunteer === null) {
-			res.status(404).json({
-				success: false,
-				message: `No volunteer with the specified mail was found`,
-			});
-			return;
-		}
+	// 	// console.log(volunteer);
+	// 	if (volunteer === null) {
+	// 		res.status(404).json({
+	// 			success: false,
+	// 			message: `No volunteer with the specified mail was found`,
+	// 		});
+	// 		return;
+	// 	}
 
-		const volunteerId = volunteer._id;
+	// const volunteerId = volunteer._id;
 
-		//Find an address, create new one if it doesn't exists
-		Address.find(
-			{ streetNumber, streetName, zipCode, city },
-			(err, address) => {
-				if (err !== null) {
-					res.json({
-						success: false,
-						message: err.toString(),
-					});
-					return;
-				}
-
-				if (Object.keys(address).length === 0) {
-					const address = new Address({
-						...req.body,
-					});
-
-					address.save((err, address) => {
-						if (err !== null) {
-							res.json({
-								success: false,
-								message: err.toString(),
-							});
-							return;
-						}
-
-						saveBeneficiary(
-							address._id,
-							volunteerId,
-							allButAddressVolunteer,
-							res
-						);
-					});
-					return;
-				}
-
-				// console.log(address[0]);
-				saveBeneficiary(
-					address[0]._id,
-					volunteerId,
-					allButAddressVolunteer,
-					res
-				);
+	//Find an address, create new one if it doesn't exists
+	Address.find(
+		{ streetNumber, streetName, zipCode, city },
+		(err, address) => {
+			if (err !== null) {
+				res.json({
+					success: false,
+					message: err.toString(),
+				});
+				return;
 			}
-		);
-	});
+
+			if (Object.keys(address).length === 0) {
+				const address = new Address({
+					...req.body,
+				});
+
+				address.save((err, address) => {
+					if (err !== null) {
+						res.json({
+							success: false,
+							message: err.toString(),
+						});
+						return;
+					}
+
+					saveBeneficiary(
+						address._id,
+						volunteerId,
+						allButAddressVolunteer,
+						res
+					);
+				});
+				return;
+			}
+
+			// console.log(address[0]);
+			saveBeneficiary(
+				address[0]._id,
+				volunteerId,
+				allButAddressVolunteer,
+				res
+			);
+		}
+	);
+	// });
 };
 
 const deleteBeneficiary = (req, res) => {
