@@ -1,7 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-const { Beneficiary, Volunteer, Address, Report } = require('../models');
+const {
+	Beneficiary,
+	Volunteer,
+	Address,
+	Report,
+	BeneficiaryLodging,
+} = require('../models');
 
 const saveBeneficiary = (addressId, volunteerId, otherData, res) => {
 	const beneficiary = new Beneficiary({
@@ -141,32 +147,6 @@ const deleteBeneficiary = (req, res) => {
 	});
 };
 
-const readReports = (req, res) => {
-	console.log('GET /beneficiaries/reports');
-
-	Report.find({}, (err, reports) => {
-		if (err !== null) {
-			res.json({
-				success: false,
-				message: err.toString(),
-			});
-			return;
-		}
-
-		const data = reports.map((report) => {
-			return {
-				_id: report._id,
-				date: report.date,
-			};
-		});
-
-		res.json({
-			success: true,
-			data,
-		});
-	});
-};
-
 const readBeneficiary = (req, res) => {
 	console.log('GET /beneficiaires/:id');
 	const beneficiaryId = req.params.id;
@@ -198,6 +178,36 @@ const readBeneficiary = (req, res) => {
 		});
 };
 
+const readBeneficiaryLodgings = (req, res) => {
+	BeneficiaryLodging.find({})
+		.then((beneficiaryLodgings) => {
+			const data = beneficiaryLodgings.map((beneficiaryLodging) => {
+				return {
+					_id: beneficiaryLodging._id,
+					beneficiary: beneficiaryLodging.beneficiary,
+					lodging: beneficiaryLodging.lodging,
+					dateEntry: beneficiaryLodging.dateEntry,
+					dateExit: beneficiaryLodging.dateExit,
+					exitMotif: beneficiaryLodging.exitMotif,
+					isContractSigned: beneficiaryLodging.isContractSigned,
+					isContractToRenew: beneficiaryLodging.isContractToRenew,
+					comments: beneficiaryLodging.comments,
+				};
+			});
+
+			res.json({
+				success: true,
+				data,
+			});
+		})
+		.catch((err) => {
+			res.json({
+				success: false,
+				message: err.toString(),
+			});
+		});
+};
+
 const readBeneficiaries = (req, res) => {
 	console.log('GET /beneficiaries');
 
@@ -217,6 +227,42 @@ const readBeneficiaries = (req, res) => {
 				lastName: beneficiary.lastName,
 				phone: beneficiary.phone,
 				mail: beneficiary.mail,
+			};
+		});
+
+		res.json({
+			success: true,
+			data,
+		});
+	});
+};
+
+const readReports = (req, res) => {
+	console.log('GET /beneficiaries/reports');
+
+	Report.find({}, (err, reports) => {
+		if (err !== null) {
+			res.json({
+				success: false,
+				message: err.toString(),
+			});
+			return;
+		}
+
+		console.log(reports);
+
+		if (Object.keys(reports) === 0) {
+			res.json({
+				success: false,
+				message: `No reports were found`,
+			});
+			return;
+		}
+
+		const data = reports.map((report) => {
+			return {
+				_id: report._id,
+				date: report.date,
 			};
 		});
 
@@ -261,14 +307,13 @@ const updateBeneficiary = (req, res) => {
 	);
 };
 
-router.route('/').post(createBeneficiary).get(readBeneficiaries);
-
+router.route('/reports').get(readReports);
+router.route('/lodgings').get(readBeneficiaryLodgings);
 router
 	.route('/:id')
 	.get(readBeneficiary)
 	.delete(deleteBeneficiary)
 	.put(updateBeneficiary);
-
-router.route('/reports').get(readReports);
+router.route('/').post(createBeneficiary).get(readBeneficiaries);
 
 module.exports = router;
