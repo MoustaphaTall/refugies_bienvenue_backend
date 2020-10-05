@@ -6,5 +6,5 @@ module.exports = {
 	contactController: require('./contact'),
 	volunteerController: require('./volunteer'),
 	reportsController: require('./reports'),
-	beneficiaryLodgingController: require('./beneficiaryLodging');
+	beneficiaryLodgingController: require('./beneficiaryLodging'),
 };

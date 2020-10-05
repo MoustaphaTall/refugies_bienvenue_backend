@@ -41,7 +41,7 @@ const createBeneficiary = (req, res) => {
 	} = allBody;
 
 	// Find the volunteer tied to the beneficiary
-	Volunteer.find({ mail: volunteerMail }, (err, volunteer) => {
+	Volunteer.findOne({ mail: volunteerMail }, (err, volunteer) => {
 		if (err !== null) {
 			res.json({
 				success: false,
@@ -50,7 +50,16 @@ const createBeneficiary = (req, res) => {
 			return;
 		}
 
-		const volunteerId = volunteer[0]._id;
+		// console.log(volunteer);
+		if (volunteer === null) {
+			res.status(404).json({
+				success: false,
+				message: `No volunteer with the specified mail was found`,
+			});
+			return;
+		}
+
+		const volunteerId = volunteer._id;
 
 		//Find an address, create new one if it doesn't exists
 		Address.find(

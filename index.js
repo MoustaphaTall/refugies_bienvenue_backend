@@ -75,7 +75,7 @@ app.use('/api/beneficiaries/:id/reports', reportsController);
 app.use('/api/lodging', lodgingController);
 app.use('/api/meetings', followUpMeetingController);
 app.use('/api/contacts', contactController);
-app.use('api/volunteer/', volunteerController);
+app.use('/api/volunteers', volunteerController);
 
 //Testing if page displays correctly, delete afterwise
 app.get('/', (req, res) => {
