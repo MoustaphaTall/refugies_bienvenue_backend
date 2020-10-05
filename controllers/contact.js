@@ -8,14 +8,15 @@ const saveContact = (addressId, otherData, res) => {
 		address: addressId,
 		...otherData,
 	});
+	console.log(contact);
 
 	contact.save((err, contact) => {
 		if (err !== null) {
-			res.json({
+			console.log(err);
+			return res.json({
 				success: false,
 				message: err.toString(),
 			});
-			return;
 		}
 
 		res.json({
