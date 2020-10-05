@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const contactSchema = new Schema({
-	address: { type: Schema.Types.ObjectId, ref: 'Address' },
+	address: { type: Schema.Types.ObjectId, ref: 'address' },
 	firstName: String,
-	LastName: String,
-	organization: String,
+	lastName: String,
+	organisation: String,
 	position: String,
 	phone: Number,
 	mail: String,

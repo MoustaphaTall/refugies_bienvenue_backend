@@ -4,6 +4,8 @@ const router = express.Router();
 const { Contact, Address } = require('../models');
 
 router.post('/', (req, res) => {
+	console.log('contactController');
+	console.log(req.body);
 	const {
 		address,
 		firstName,
@@ -11,6 +13,7 @@ router.post('/', (req, res) => {
 		organisation,
 		position,
 		mail,
+		phone,
 	} = req.body;
 
 	const contact = new Contact({
@@ -20,17 +23,21 @@ router.post('/', (req, res) => {
 		organisation,
 		position,
 		mail,
+		phone,
 	});
+	console.log(contact);
 
 	contact.save((err, contactDb) => {
+		console.log('save');
 		if (err !== null) {
-			res.json({
+			console.log(err);
+			return res.json({
 				success: false,
 				message: err.toString(),
 			});
-			return;
 		}
-		res.json({
+		console.log(contactDb);
+		return res.json({
 			success: true,
 			data: contactDb,
 		});
