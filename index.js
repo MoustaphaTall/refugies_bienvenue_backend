@@ -24,8 +24,10 @@ const {
 //Set up models
 const { Volunteer } = require('./models');
 
-const { PORT, MONGODB_URI } = process.env;
-const port = PORT || 3002;
+const MONGODB_URI = 'mongodb://localhost:27017/réfugiés_bienvenue';
+
+// const { PORT, MONGODB_URI } = process.env;
+const port = 3002;
 
 mongoose.connect(
 	MONGODB_URI,
