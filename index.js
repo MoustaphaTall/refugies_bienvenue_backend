@@ -14,6 +14,7 @@ require('dotenv').config();
 const {
 	authController,
 	beneficiaryController,
+	beneficiaryLodgingController,
 	lodgingController,
 	followUpMeetingController,
 	contactController,
@@ -72,12 +73,13 @@ passport.use(new HTTPBearerStrategy(Volunteer.authenticateBearer())); //we decla
 
 // Set up routes
 app.use('/api', authController);
-app.use('/api/beneficiaries', beneficiaryController);
 app.use('/api/beneficiaries/:id/reports', reportsController);
+app.use('/api/beneficiaries/:id/lodgings', beneficiaryLodgingController);
+app.use('/api/beneficiaries', beneficiaryController);
 app.use('/api/lodging', lodgingController);
 app.use('/api/meetings', followUpMeetingController);
 app.use('/api/contacts', contactController);
-app.use('api/volunteer/', volunteerController);
+app.use('/api/volunteers', volunteerController);
 
 //Testing if page displays correctly, delete afterwise
 app.get('/', (req, res) => {

@@ -1,5 +1,4 @@
 const express = require('express');
-const { reportsController } = require('.');
 const router = express.Router({ mergeParams: true });
 
 const { Report } = require('../models');
@@ -66,6 +65,7 @@ const deleteReport = (req, res) => {
 };
 
 const readReport = (req, res) => {
+	console.log(req.params);
 	console.log('GET /beneficiaries/:id/reports/:reportId');
 
 	const reportId = req.params.reportId;
