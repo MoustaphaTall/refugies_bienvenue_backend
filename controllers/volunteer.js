@@ -42,16 +42,16 @@ router.post('/', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-	const {
-		firstName,
-		lastName,
-		Password,
-		mail,
-		phone,
-		isAdmin,
-		isActive,
-		callBackDate,
-	} = req.body;
+	// const {
+	// 	firstName,
+	// 	lastName,
+	// 	Password,
+	// 	mail,
+	// 	phone,
+	// 	isAdmin,
+	// 	isActive,
+	// 	callBackDate,
+	// } = req.body;
 
 	Volunteer.find({}, (err, volunteers) => {
 		if (err !== null) {
