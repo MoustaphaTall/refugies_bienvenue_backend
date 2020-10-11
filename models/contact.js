@@ -5,7 +5,7 @@ const contactSchema = new Schema({
 	address: { type: Schema.Types.ObjectId, ref: 'address' },
 	firstName: String,
 	lastName: String,
-	organisation: String,
+	organization: String,
 	position: String,
 	phone: Number,
 	mail: String,

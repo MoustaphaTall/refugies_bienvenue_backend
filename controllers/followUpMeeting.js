@@ -15,6 +15,53 @@ const createMeeting = (req, res) => {
 		...allButInterlocutor
 	} = req.body;
 
+	// // Find the volunteer to which the meeting is attached
+	// Volunteer.findOne({ mail: volunteerMail }, async (err, volunteer) => {
+	// 	if (err !== null) {
+	// 		res.json({
+	// 			success: false,
+	// 			message: err.toString(),
+	// 		});
+	// 		return;
+	// 	}
+
+	// 	if (volunteer === null) {
+	// 		res.json({
+	// 			success: false,
+	// 			message: `No volunteer with mail ${volunteerMail} was found`,
+	// 		});
+	// 		return;
+	// 	}
+
+	// 	const volunteerId = volunteer._id;
+	// 	//We need to get the interlocutor's type (beneficiary etc) and interlocutor's id to populate afterwards
+	// 	let interlocutorMap = {
+	// 		interlocutor: null,
+	// 		interlocutorId: null,
+	// 	};
+	// 	let { interlocutor, interlocutorId } = interlocutorMap;
+
+	// 	//We use the interlocutor's mail, which is unique, to find them and get their id
+	// 	if (beneficiaryMail !== undefined) {
+	// 		interlocutorId = await getBeneficiaryId(beneficiaryMail, res);
+	// 		interlocutor = 'beneficiary';
+	// 	} else if (contactMail !== undefined) {
+	// 		interlocutorId = await getContactId(contactMail, res);
+	// 		interlocutor = 'contact';
+	// 	} else if (lodgingMail !== undefined) {
+	// 		interlocutorId = await getLodgingId(lodgingMail, res);
+	// 		interlocutor = 'lodging';
+	// 	} else {
+	// 		res.json({
+	// 			success: false,
+	// 			message: `Please choose an existing interlocutor`,
+	// 		});
+	// 	}
+
+	// console.log('interlocutorId', interlocutorId);
+	const volunteerFirstName = getNameVolunteer(volunteerId).firstName;
+	const volunteerLastName = getNameVolunteer(volunteerId).lastName;
+
 	const meeting = new FollowUpMeeting({
 		volunteer: volunteerId,
 		beneficiary: beneficiaryId,
