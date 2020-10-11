@@ -220,15 +220,22 @@ const readBeneficiaries = (req, res) => {
 			return;
 		}
 
-		const data = beneficiaries.map((beneficiary) => {
-			return {
-				_id: beneficiary._id,
-				firstName: beneficiary.firstName,
-				lastName: beneficiary.lastName,
-				phone: beneficiary.phone,
-				mail: beneficiary.mail,
-			};
-		});
+		// console.log(beneficiaries);
+
+		const data = beneficiaries.map((beneficiary) => beneficiary);
+		//  C'est Ghani qui l'a mis en commentaires, parce que j'ai besoin
+		//de toutes les informqtion de beneciaires pour avoir une full fonctionnalité de search bar;
+		// {
+		// 	return {
+		// 		_id: beneficiary._id,
+		// 		firstName: beneficiary.firstName,
+		// 		lastName: beneficiary.lastName,
+		// 		phone: beneficiary.phone,
+		// 		mail: beneficiary.mail,
+		// 		isHomeless: beneficiary.isHomeless,
+		// 		followsCourse: beneficiary.followsCourse,
+		// 	};
+		// }
 
 		res.json({
 			success: true,

@@ -25,24 +25,10 @@ const {
 //Set up models
 const { Volunteer } = require('./models');
 
-const { PORT, MONGODB_URI } = process.env;
-const port = PORT || 3002;
+const MONGODB_URI = 'mongodb://localhost:27017/réfugiés_bienvenue';
 
-mongoose.connect(
-	MONGODB_URI,
-	{
-		useCreateIndex: true,
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	},
-	(err) => {
-		if (err !== null) {
-			console.log('Error connecting to DB', err);
-			return;
-		}
-		console.log('DB successfully connected');
-	}
-);
+// const { PORT, MONGODB_URI } = process.env;
+const port = 3002;
 
 const app = express();
 //Enable cross-origin ressource sharing
@@ -85,6 +71,21 @@ app.get('/', (req, res) => {
 	res.send('It works!');
 });
 
-app.listen(port, () => {
-	console.log(`Server started on port ${port}`);
-});
+mongoose.connect(
+	MONGODB_URI,
+	{
+		useCreateIndex: true,
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	},
+	(err) => {
+		if (err !== null) {
+			console.log('Error connecting to DB', err);
+			return;
+		}
+		console.log('DB successfully connected');
+		app.listen(port, () => {
+			console.log(`Server started on port ${port}`);
+		});
+	}
+);

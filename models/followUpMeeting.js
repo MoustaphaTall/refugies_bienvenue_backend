@@ -6,6 +6,8 @@ const followUpMeetingSchema = new Schema({
 	lodging: { type: Schema.Types.ObjectId, ref: 'Lodging' },
 	volunteer: { type: Schema.Types.ObjectId, ref: 'Volunteer' },
 	contact: { type: Schema.Types.ObjectId, ref: 'Contact' },
+	firstName: String,
+	lastName: String,
 	interlocutor: String,
 	platform: String,
 	date: Date,
