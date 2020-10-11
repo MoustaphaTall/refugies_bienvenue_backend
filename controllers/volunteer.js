@@ -26,7 +26,7 @@ router.post('/', (req, res) => {
 		callBackDate,
 	});
 
-	Volunteer.save((err, volunteerDb) => {
+	volunteer.save((err, volunteerDb) => {
 		if (err !== null) {
 			res.json({
 				success: false,
