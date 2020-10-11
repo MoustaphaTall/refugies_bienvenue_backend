@@ -259,16 +259,16 @@ const readReports = (req, res) => {
 			return;
 		}
 
-		const data = reports.map((report) => {
-			return {
-				_id: report._id,
-				date: report.date,
-			};
-		});
+		// const data = reports.map((report) => {
+		// 	return {
+		// 		_id: report._id,
+		// 		date: report.date,
+		// 	};
+		// });
 
 		res.json({
 			success: true,
-			data,
+			data: reports,
 		});
 	});
 };

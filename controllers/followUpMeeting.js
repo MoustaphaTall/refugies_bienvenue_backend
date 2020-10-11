@@ -82,7 +82,7 @@ const createMeeting = (req, res) => {
 		...allButInterlocutor
 	} = req.body;
 
-	//Find the volunteer to which the meeting is attached
+	// // Find the volunteer to which the meeting is attached
 	// Volunteer.findOne({ mail: volunteerMail }, async (err, volunteer) => {
 	// 	if (err !== null) {
 	// 		res.json({
