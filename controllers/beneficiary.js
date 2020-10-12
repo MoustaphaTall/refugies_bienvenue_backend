@@ -247,37 +247,39 @@ const readBeneficiaries = (req, res) => {
 const readReports = (req, res) => {
 	console.log('GET /beneficiaries/reports');
 
-	Report.find({}, (err, reports) => {
-		if (err !== null) {
+	Report.find({})
+		.populate('beneficiary')
+		.exec((err, reports) => {
+			if (err !== null) {
+				res.json({
+					success: false,
+					message: err.toString(),
+				});
+				return;
+			}
+
+			console.log(reports);
+
+			if (Object.keys(reports) === 0) {
+				res.json({
+					success: false,
+					message: `No reports were found`,
+				});
+				return;
+			}
+
+			// const data = reports.map((report) => {
+			// 	return {
+			// 		_id: report._id,
+			// 		date: report.date,
+			// 	};
+			// });
+
 			res.json({
-				success: false,
-				message: err.toString(),
+				success: true,
+				data: reports,
 			});
-			return;
-		}
-
-		console.log(reports);
-
-		if (Object.keys(reports) === 0) {
-			res.json({
-				success: false,
-				message: `No reports were found`,
-			});
-			return;
-		}
-
-		// const data = reports.map((report) => {
-		// 	return {
-		// 		_id: report._id,
-		// 		date: report.date,
-		// 	};
-		// });
-
-		res.json({
-			success: true,
-			data: reports,
 		});
-	});
 };
 
 const updateBeneficiary = (req, res) => {

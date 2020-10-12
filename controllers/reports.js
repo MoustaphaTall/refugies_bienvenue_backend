@@ -4,7 +4,7 @@ const router = express.Router({ mergeParams: true });
 const { Report } = require('../models');
 
 const createReport = (req, res) => {
-	console.log('POST /beneficiaries/:id/report');
+	console.log('POST /beneficiaries/:id/reports');
 	console.log('POST /beneficiaries/:id/report req.params', req.params);
 
 	const beneficiaryId = req.params.id;
@@ -96,6 +96,38 @@ const readReport = (req, res) => {
 		});
 };
 
+const readBeneficiaryReports = (req, res) => {
+	// console.log(req.params);
+	console.log('GET /beneficiaries/:id/reports');
+
+	const beneficiaryId = req.params.id;
+
+	Report.find({ beneficiary: beneficiaryId })
+		.populate('beneficiary')
+		.exec((err, reports) => {
+			if (err !== null) {
+				res.json({
+					success: false,
+					message: err.toString(),
+				});
+				return;
+			}
+
+			if (reports.length === 0) {
+				res.json({
+					success: false,
+					message: `No reports with beneficiary id ${beneficiaryId} were found`,
+				});
+				return;
+			}
+
+			res.json({
+				success: true,
+				data: reports,
+			});
+		});
+};
+
 const updateReport = (req, res) => {
 	console.log('PUT /beneficiaries/:id/reports/:reportId');
 
@@ -130,7 +162,7 @@ const updateReport = (req, res) => {
 		}
 	);
 };
-router.route('/').post(createReport);
+router.route('/').post(createReport).get(readBeneficiaryReports);
 router
 	.route('/:reportId')
 	.get(readReport)
