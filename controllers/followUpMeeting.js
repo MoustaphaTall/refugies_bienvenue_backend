@@ -1,34 +1,9 @@
 const express = require('express');
 var mongoose = require('mongoose');
 const router = express.Router();
+const Volunteer = require('../models/volunteer');
 
 const { FollowUpMeeting } = require('../models');
-
-const getNameVolunteer = (id) => {
-	// Find the volunteer to which the meeting is attached
-	Volunteer.findOne(
-		{ _id: mongoose.Types.ObjectId(volunteerId) },
-		async (err, volunteer) => {
-			if (err !== null) {
-				res.json({
-					success: false,
-					message: err.toString(),
-				});
-				return;
-			}
-
-			if (volunteer === null) {
-				res.json({
-					success: false,
-					message: `No volunteer with mail ${volunteerMail} was found`,
-				});
-				return;
-			}
-
-			return volunteer;
-		}
-	);
-};
 
 const createMeeting = (req, res) => {
 	console.log('POST /meetings');
@@ -88,8 +63,6 @@ const createMeeting = (req, res) => {
 	const volunteerLastName = getNameVolunteer(volunteerId).lastName;
 
 	const meeting = new FollowUpMeeting({
-		fistName: volunteerFirstName,
-		lastName: volunteerLastName,
 		volunteer: volunteerId,
 		beneficiary: beneficiaryId,
 		contact: contactId,
