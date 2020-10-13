@@ -7,7 +7,7 @@ const beneficiarySchema = new Schema({
 	lastName: String,
 	birthDate: Date,
 	gender: String,
-	phone: Number,
+	phone: String,
 	mail: String,
 	dateArrivalFrance: Date,
 	dateArrivalAssociation: Date,

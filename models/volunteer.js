@@ -8,7 +8,7 @@ const volunteerSchema = new Schema({
 	lastName: String,
 	password: String,
 	mail: String,
-	phone: Number,
+	phone: String,
 	isAdmin: Boolean,
 	callBackDate: Date,
 	token: String,

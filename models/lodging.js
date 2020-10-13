@@ -7,7 +7,7 @@ const lodgingSchema = new Schema({
 	firstName: String,
 	lastName: String,
 	age: Number,
-	phone: Number,
+	phone: String,
 	mail: String,
 	isLodgingAvailable: Boolean,
 	availableFrom: Date,
